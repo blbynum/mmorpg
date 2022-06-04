@@ -2,6 +2,7 @@
 require(__dirname + "/Resources/config.js").config;
 const fs = require('fs');
 const net = require('net');
+require('./packet.js');
 
 // Load Initializers
 const init_files = fs.readdirSync(__dirname + "/Initializers");
@@ -27,7 +28,7 @@ map_files.forEach(function (mapFile) {
     maps[map.room] = map;
 })
 
-net.createServer(function(socket) {
+net.createServer(function (socket) {
 
     console.log("socket connected")
     const c_inst = new require('./client.js');
@@ -48,4 +49,4 @@ console.log("Initialization Completed, Server running on port: " + config.port +
 
 
 // 4. Initiate the server and listen to the internet
-            // all of server logic
+// all of server logic
