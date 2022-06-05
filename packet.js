@@ -84,6 +84,16 @@ module.exports = packet = {
                     }
                 });
                 break;
+            case "POS":
+                data = PacketModels.pos.parse(dataPacket);
+                console.log(data);
+
+                c.user.pos_x = data.target_x;
+                c.user.pos_y = data.target_y;
+                c.user.save(); // TODO: Save less often
+                c.broadcastroom(packet.build(["POS", c.user.username, data.target_x, data.target_y]));
+
+                break;
         }
 
     }

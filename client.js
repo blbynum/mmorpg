@@ -26,19 +26,27 @@ module.exports = function () {
 
         maps[selected_room].clients.push(client);
 
-    }
+    };
+
+    this.broadcastroom = function(packetData) {
+        maps[client.user.current_room].clients.forEach(function(otherClient) {
+            if (otherClient.user.username != client.user.username) {
+                otherClient.socket.write(packetData);
+            }
+        });
+    };
 
     // Socket Stuff
     this.data = function (data) {
         packet.parse(client, data);
-    }
+    };
 
     this.error = function (err) {
         console.log("client error " + err.toString());
-    }
+    };
 
     this.end = function () {
         console.log("client closed");
-    }
+    };
 
 }

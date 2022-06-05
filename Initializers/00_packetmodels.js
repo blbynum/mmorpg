@@ -14,5 +14,10 @@ module.exports = PacketModels = {
     register: new Parser().skip(1)
         .string("command", StringOptions)
         .string("username", StringOptions)
-        .string("password", StringOptions) //TODO: encrypted passwords
+        .string("password", StringOptions), //TODO: encrypted passwords
+
+    pos: new Parser().skip(1)
+        .string("command", StringOptions)
+        .int32le("target_x", StringOptions)
+        .int32le("target_y", StringOptions)
 }
