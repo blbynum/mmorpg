@@ -3,7 +3,7 @@ const _ = require('underscore');
 
 module.exports = function () {
 
-    let client = this;
+    const client = this;
 
     // These objects will be added at runtime
     // this.socket = {}
@@ -18,7 +18,7 @@ module.exports = function () {
     }
 
     // Client Methods
-    this.enterrom = function(selected_room) {
+    this.enterroom = function(selected_room) {
 
         maps[selected_room].clients.forEach(function(otherClient) {
             otherClient.socket.write(packet.build(["ENTER", client.user.username, client.user.pos_x, client.user.pos_y]))

@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
     sprite: String,
 
     current_room: String,
-    pox_x: Number,
+    pos_x: Number,
     pos_y: Number
 });
 
