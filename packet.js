@@ -32,6 +32,49 @@ module.exports = packet = {
         let finalPacket = Buffer.concat([size, dataBuffer], size.length + dataBuffer.length);
 
         return finalPacket;
-    }
+    },
 
+    // Parse a packet to be handled for a client
+    parse: function (client, data) {
+
+        // index
+        let i = 0;
+
+        while ( i < data.length ) {
+
+            let packetSize = data.readUInt8(i);
+            let extractedPacket = new Buffer(packetSize);
+            data.copy(extractedPacket, 0, i, i + packetSize);
+
+            this.interpret(client, extractedPacket);
+
+            i += packetSize;
+
+        }
+
+    },
+
+    interpret(client, dataPacket) {
+        let header = PacketModels.header.parse(dataPacket);
+        console.log("Interpret: " + header.command);
+
+        switch (header.command.toUpperCase()) {
+            case "LOGIN":
+                let data = PacketModels.login.parse(dataPacket);
+                User.login(data.username, data.password, function(result, user) {
+                    if(result) {
+                        client.user = user;
+                        client.enterroom(client.user.current_room);
+                        client.socket.write(packet.build(["LOGIN", "TRUE", client.user.current_room, client.user.pos_x, client.user.pos_y, client.user.username]))
+                    } else {
+                        client.socket.write(packet.build(["LOGIN", "FALSE"]));
+                    }
+                })
+                break;
+            case "REGISTER":
+                // TODO: something
+                break;
+        }
+
+    }
 }
