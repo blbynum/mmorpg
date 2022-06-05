@@ -23,12 +23,12 @@ const conf = {
     production: {
         ip: args.ip || "0.0.0.0",
         port: args.port || "8081",
-        database: "mongodb://127.0.0.1/hangrymmo_prod"
+        database: "mongodb://localhost:27017/HangryAssMMO_prod"
     },
     test: {
         ip: args.ip || "0.0.0.0",
         port: args.port || "8082",
-        database: "mongodb://127.0.0.1/hangrymmo_test"
+        database: "mongodb://localhost:27017/HangryAssMMO_test"
     }
 };
 

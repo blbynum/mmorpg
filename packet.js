@@ -35,44 +35,54 @@ module.exports = packet = {
     },
 
     // Parse a packet to be handled for a client
-    parse: function (client, data) {
+    parse: function (c, data) {
 
         // index
-        let i = 0;
+        let idx = 0;
 
-        while ( i < data.length ) {
+        while ( idx < data.length ) {
 
-            let packetSize = data.readUInt8(i);
+            let packetSize = data.readUInt8(idx);
             let extractedPacket = new Buffer(packetSize);
-            data.copy(extractedPacket, 0, i, i + packetSize);
+            data.copy(extractedPacket, 0, idx, idx + packetSize);
 
-            this.interpret(client, extractedPacket);
+            this.interpret(c, extractedPacket);
 
-            i += packetSize;
+            idx += packetSize;
 
         }
 
     },
 
-    interpret(client, dataPacket) {
+    interpret(c, dataPacket) {
         let header = PacketModels.header.parse(dataPacket);
         console.log("Interpret: " + header.command);
 
+        let data;
+
         switch (header.command.toUpperCase()) {
             case "LOGIN":
-                let data = PacketModels.login.parse(dataPacket);
+                data = PacketModels.login.parse(dataPacket);
                 User.login(data.username, data.password, function(result, user) {
+                    console.log("Login Result " + result);
                     if(result) {
-                        client.user = user;
-                        client.enterroom(client.user.current_room);
-                        client.socket.write(packet.build(["LOGIN", "TRUE", client.user.current_room, client.user.pos_x, client.user.pos_y, client.user.username]))
+                        c.user = user;
+                        c.enterroom(c.user.current_room);
+                        c.socket.write(packet.build(["LOGIN", "TRUE", c.user.current_room, c.user.pos_x, c.user.pos_y, c.user.username]))
                     } else {
-                        client.socket.write(packet.build(["LOGIN", "FALSE"]));
+                        c.socket.write(packet.build(["LOGIN", "FALSE"]));
                     }
-                })
+                });
                 break;
             case "REGISTER":
-                // TODO: something
+                data = PacketModels.register.parse(dataPacket);
+                User.register(data.username, data.password, function(result, user) {
+                    if(result) {
+                        c.socket.write(packet.build(["REGISTER", "TRUE"]));
+                    } else {
+                        c.socket.write(packet.build(["REGISTER", "FALSE"]));
+                    }
+                });
                 break;
         }
 
