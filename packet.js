@@ -59,8 +59,9 @@ module.exports = packet = {
         console.log("Interpret: " + header.command);
 
         let data;
+        let command = header.command.toUpperCase();
 
-        switch (header.command.toUpperCase()) {
+        switch (command) {
             case "LOGIN":
                 data = PacketModels.login.parse(dataPacket);
                 User.login(data.username, data.password, function(result, user) {
@@ -94,6 +95,16 @@ module.exports = packet = {
                 c.broadcastroom(packet.build(["POS", c.user.username, data.target_x, data.target_y]));
 
                 break;
+            case "EXIT":
+                data = PacketModels.exit.parse(dataPacket);
+                console.log(data);
+
+                c.user.username = data.username;
+                c.broadcastroom(packet.build(["EXIT", c.user.username]));
+
+                break;
+            default:
+                console.log("Unrecognized packet type " + command);
         }
 
     }

@@ -46,8 +46,7 @@ module.exports = function () {
     };
 
     this.end = function () {
-        console.log("client disconnected")
-        client.broadcastroom(packet.build(["LEAVE", client.user.username]));
+        packet.parse(client, data());
     };
 
 }
