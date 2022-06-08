@@ -4,6 +4,9 @@ const fs = require('fs');
 const net = require('net');
 require('./packet.js');
 
+console.log('Hangry Assassins MMORPG Server')
+console.log('Node version: ' + process.version);
+
 // Load Initializers
 const init_files = fs.readdirSync(__dirname + "/Initializers");
 init_files.forEach(function (initFile) {
