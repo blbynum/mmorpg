@@ -1,5 +1,5 @@
 // Import required libraries
-require(__dirname + "/Resources/config.js").config;
+require(__dirname + "/Resources/config.js");
 const fs = require('fs');
 const net = require('net');
 require('./packet.js');

@@ -22,13 +22,13 @@ const common_conf = {
 const conf = {
     production: {
         ip: args.ip || "0.0.0.0",
-        port: args.port || "8081",
-        database: "mongodb://localhost:27017/HangryAssMMO_prod"
+        port: args.port || "8082",
+        database: "mongodb://127.0.0.1:27017/HangryAssMMO_prod"
     },
     test: {
         ip: args.ip || "0.0.0.0",
         port: args.port || "8082",
-        database: "mongodb://localhost:27017/HangryAssMMO_test"
+        database: "mongodb://127.0.0.1:27017/HangryAssMMO_test"
     }
 };
 
