@@ -28,11 +28,9 @@ module.exports = function () {
 
     };
 
-    this.exitroom = function() {
-        maps[client.user.current_room].clients.forEach(function (otherClient) {
-            otherClient.socket.write(packet.build(["EXIT", client.user.username]))
-        });
-    }
+    // this.exitroom = function() {
+    //
+    // }
 
     this.broadcastroom = function(packetData) {
         maps[client.user.current_room].clients.forEach(function(otherClient) {
@@ -52,7 +50,10 @@ module.exports = function () {
     };
 
     this.end = function () {
-        this.exitroom();
+        // this.exitroom();
+        maps[client.user.current_room].clients.forEach(function (otherClient) {
+            otherClient.socket.write(packet.build(["EXIT", client.user.username]))
+        });
     };
 
 }
