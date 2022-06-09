@@ -28,6 +28,12 @@ module.exports = function () {
 
     };
 
+    this.exitroom = function() {
+        maps[client.user.current_room].clients.forEach(function (otherClient) {
+            otherClient.socket.write(packet.build(["EXIT", client.user.username]))
+        });
+    }
+
     this.broadcastroom = function(packetData) {
         maps[client.user.current_room].clients.forEach(function(otherClient) {
             if (otherClient.user.username != client.user.username) {
@@ -46,7 +52,7 @@ module.exports = function () {
     };
 
     this.end = function () {
-        packet.parse(client, data());
+        this.exitroom();
     };
 
 }

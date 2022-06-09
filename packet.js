@@ -100,7 +100,7 @@ module.exports = packet = {
                 console.log(data);
 
                 c.user.username = data.username;
-                c.broadcastroom(packet.build(["EXIT", c.user.username]));
+                c.exitroom();
 
                 break;
             default:
