@@ -8,7 +8,10 @@ const userSchema = new mongoose.Schema({
 
     current_room: String,
     pos_x: Number,
-    pos_y: Number
+    pos_y: Number,
+
+    max_hp: Number,
+    hp: Number
 });
 
 userSchema.statics.register = function(username, password, cb) {
@@ -22,7 +25,10 @@ userSchema.statics.register = function(username, password, cb) {
 
         current_room: maps[config.starting_zone].room,
         pos_x: maps[config.starting_zone].start_x,
-        pos_y: maps[config.starting_zone].start_y
+        pos_y: maps[config.starting_zone].start_y,
+
+        max_hp: 100,
+        hp: 100
     });
 
     new_user.save(function (err) {

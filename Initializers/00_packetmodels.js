@@ -20,6 +20,10 @@ module.exports = PacketModels = {
         .string("command", StringOptions)
         .int32le("target_x", StringOptions)
         .int32le("target_y", StringOptions),
+    stats: new Parser().skip(1)
+        .string("command", StringOptions)
+        .int32le("hp_max", StringOptions)
+        .int32le("hp", StringOptions),
 
     exit: new Parser().skip(1)
         .string("command", StringOptions)

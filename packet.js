@@ -95,6 +95,17 @@ module.exports = packet = {
                 c.broadcastroom(packet.build(["POS", c.user.username, data.target_x, data.target_y]));
 
                 break;
+
+            case "STATS":
+                data = PacketModels.stats.parse(dataPacket);
+                console.log(data);
+
+                c.user.max_hp = data.max_hp;
+                c.user.hp = data.hp;
+                c.user.save();
+                c.broadcastroom(packet.build(["STATS", c.user.username, data.hp_max, data.hp]));
+
+                break;
             case "EXIT":
                 data = PacketModels.exit.parse(dataPacket);
                 console.log(data);
