@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
     pos_x: Number,
     pos_y: Number,
 
-    max_hp: Number,
+    hp_max: Number,
     hp: Number
 });
 
@@ -27,7 +27,7 @@ userSchema.statics.register = function(username, password, cb) {
         pos_x: maps[config.starting_zone].start_x,
         pos_y: maps[config.starting_zone].start_y,
 
-        max_hp: 100,
+        hp_max: 100,
         hp: 100
     });
 
